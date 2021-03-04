@@ -2,33 +2,22 @@ import { useState } from 'react'
 import './App.css';
 
 const StarMatch = () => {
+  const stars = utils.random(1, 9)
   return (
     <div className="game">
       <div className="help">
         Pick 1 or more numbers that sum to the number of stars
       </div>
       <div className="body">
-        <div className="left">
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
+        <div className="left">      
+          {utils.range(1, stars).map(starId => 
+            <div key={starId} className="star" />
+          )}
         </div>
         <div className="right">
-          <button className="number">1</button>
-          <button className="number">2</button>
-          <button className="number">3</button>
-          <button className="number">4</button>
-          <button className="number">5</button>
-          <button className="number">6</button>
-          <button className="number">7</button>
-          <button className="number">8</button>
-          <button className="number">9</button>
+          {utils.range(1, 9).map(number => 
+            <button key={number} className="number">{number}</button>
+          )}
         </div>
       </div>
       <div className="timer">Time Remaining: 10</div>
@@ -46,12 +35,17 @@ const colors = {
 
 // Math science
 const utils = {
+  // Sum an array
   sum: arr => arr.reduce((acc, curr) => acc + curr, 0),
 
+  // create an array of numbers between min and max (edges included)
   range: (min, max) => Array.from({ length: max - min + 1 }, (_, i) => min + i),
 
+  // pick a random number between min and max (edges included)
   random: (min, max) => min + Math.floor(Math.random() * (max - min + 1)),
 
+  // Given an array of numbers and a max...
+  // Pick a random sum (< max) from the set of all available sums in arr
   randomSumIn: (arr, max) => {
     const sets = [[]];
     const sums = [];
