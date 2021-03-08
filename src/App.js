@@ -13,8 +13,11 @@ const DisplayStars = props => {
 }
 
 const PlayNumbers = props => {
-  return <button key={props.number} className="number">{props.number}</button>
+  return <button key={props.number} className="number" onClick={()=> console.log(props.number)}>
+    {props.number}
+  </button>
 }
+
 const StarMatch = () => {
 	const [stars, setStars] = useState(utils.random(1, 9));
   return (
