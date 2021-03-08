@@ -1,25 +1,41 @@
-import { useState } from 'react'
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 // STAR MATCH - V2
-const DisplayStars = props => {
+const PlayNumber = (props) => {
+  return (
+    <button style={{ backgroundColor: colors[props.status] }} className="number" onClick={() => console.log(props.number)}>
+      {props.number}
+    </button>
+  );
+};
+const DisplayStars = (props) => {
   return (
     <>
-      {utils.range(1, props.stars).map(starId =>
-      <div key={starId} className="star" />
-      )}
+      {utils.range(1, props.stars).map((starId) => (
+        <div key={starId} className="star" />
+      ))}
     </>
-  )
-}
-
-const PlayNumbers = props => {
-  return <button key={props.number} className="number" onClick={()=> console.log(props.number)}>
-    {props.number}
-  </button>
-}
+  );
+};
 
 const StarMatch = () => {
-	const [stars, setStars] = useState(utils.random(1, 9));
+  const [stars, setStars] = useState(utils.random(1, 9));
+  const [availableNums, setAvailableNums] = useState([1, 2, 3, 4, 5, 6]);
+  const [candidateNums, setCandidateNums] = useState([2, 3]);
+
+  const candidatesAreWrong = utils.sum(candidateNums) > stars;
+
+  const numberStatus = (number) => {
+    if (!availableNums.includes(number)) {
+      return "used";
+    } else if (candidateNums.includes(number)) {
+      return candidatesAreWrong ? "wrong" : "candidate";
+    } else {
+      return "available";
+    }
+  };
+
   return (
     <div className="game">
       <div className="help">
@@ -27,12 +43,16 @@ const StarMatch = () => {
       </div>
       <div className="body">
         <div className="left">
-         <DisplayStars stars={stars} />
+          <DisplayStars stars={stars} />
         </div>
         <div className="right">
-          {utils.range(1, 9).map(number =>
-            <PlayNumbers number={number}/>
-          )}
+          {utils.range(1, 9).map((number) => (
+            <PlayNumber
+              number={number}
+              status={numberStatus(number)}
+              key={number}
+            />
+          ))}
         </div>
       </div>
       <div className="timer">Time Remaining: 10</div>
@@ -42,16 +62,16 @@ const StarMatch = () => {
 
 // Color Theme
 const colors = {
-  available: 'lightgray',
-  used: 'lightgreen',
-  wrong: 'lightcoral',
-  candidate: 'deepskyblue',
+  available: "lightgray",
+  used: "lightgreen",
+  wrong: "lightcoral",
+  candidate: "deepskyblue",
 };
 
 // Math science
 const utils = {
   // Sum an array
-  sum: arr => arr.reduce((acc, curr) => acc + curr, 0),
+  sum: (arr) => arr.reduce((acc, curr) => acc + curr, 0),
 
   // create an array of numbers between min and max (edges included)
   range: (min, max) => Array.from({ length: max - min + 1 }, (_, i) => min + i),
