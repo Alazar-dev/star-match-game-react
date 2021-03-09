@@ -1,3 +1,4 @@
-Shopping Cart made with React.js
--Material-ui
-# star-match-game-react
+# Simple-Card-Game-React
+
+* made with react-functional component
+* hooks
