@@ -3,6 +3,6 @@
 * made with react-functional component
 * hooks
 
-## Still on development
+### Still on development
 
-* make reusable for another game *
+*make reusable for another game*
